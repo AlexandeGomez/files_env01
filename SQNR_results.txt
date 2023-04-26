@@ -1,0 +1,3 @@
+Resultado de las 1000 pruebas:
+Número de pruebas: 1000
+Promedio de las pruebas: 130.51514159292333
