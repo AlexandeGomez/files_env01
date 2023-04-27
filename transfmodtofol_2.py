@@ -7,9 +7,8 @@ print(chr(8743))
 
 #%%
 s2 = "◊(A)"
-s3 = "◊(□(p∧p)x◊(q∨q))"
-s4 = "□(p∧p)x◊(q∨q)"
-s5 = "□p x ◊q"
+s3 = "◊(□(A)∧◊(B))"
+s4 = "□p∧◊q"
 
 #%%
 eval = s3
@@ -28,11 +27,32 @@ print(regright)
 
 # %%
 
+indxls = []
+rc = ""
+auxls = ["y","x"]
+if(len(regleft)==len(regright) and len(regleft)==0):
+    for i in range(len(eval)):
+        if(eval[i]=="□" or eval[i]=="◊"):
+            indxls.append(i)
+
+    for i in range(len(indxls)):
+        if(eval[indxls[i]]=="□"):
+            rs = "forall " + auxls[i] + ":(S(x,y) ->" + eval[i+1+(2*i)]+"("+ auxls[i] +")" +")"
+        elif(eval[indxls[i]]=="◊"):
+            rs = "exist "+ auxls[i] + ":(S(x,y) ∧" + eval[i+1+(2*i)] + "(" + auxls[i] + ")" + ")"
+
+        if(i==0):
+            rc = rc + rs
+        else:
+            rc = rc + eval[2] + " " + rs
+         
+    
+
 if(len(regleft)==len(regright) and len(regleft)==1):
     if(eval[0] == '□'):
-        rs = "forall y:(S(x,y) -> _)"
+        rs = "forall y:(S(x,y) -> "+eval[2]+"(y))"
     elif(eval[0] == '◊'):
-        rs = "exist y:(S(x,y) ∧ _)"
+        rs = "exist y:(S(x,y) ∧ "+eval[2]+"(y))"
 
 elif(len(regleft)==len(regright) and len(regleft)==2):
     if(eval[regleft[0]-1]=='□'):
